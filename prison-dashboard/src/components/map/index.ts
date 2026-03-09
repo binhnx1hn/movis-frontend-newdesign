@@ -1,0 +1,1 @@
+export { InteractivePrisonMap } from './InteractivePrisonMap';

@@ -1,0 +1,27 @@
+{
+	"mcpServers": {
+		"stitch": {
+			"command": "cmd.exe",
+			"args": [
+				"/c",
+				"stitch-mcp",
+				"proxy",
+				"--transport",
+				"stdio"
+			],
+			"env": {
+				"STITCH_API_KEY": "AQ.Ab8RN6I2un0LS7m-XU084AcAhQJNdlBxsjufRSm5w89rODHtRQ"
+			},
+			"disabled": false,
+			"alwaysAllow": [
+				"list_screens",
+				"edit_screens",
+				"get_screen",
+				"get_project",
+				"generate_screen_from_text",
+				"create_project",
+				"list_projects"
+			]
+		}
+	}
+}
