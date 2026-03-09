@@ -117,3 +117,193 @@ body {
   box-shadow: 0 0 15px rgba(34, 211, 238, 0.4);
   transition: box-shadow 0.3s ease;
 }
+
+/* ============================================ */
+/* LIGHT MODE THEME OVERRIDES                   */
+/* ============================================ */
+
+.light-mode {
+  background-color: #f1f5f9 !important;
+  background-image: radial-gradient(circle, #cbd5e1 1px, transparent 1px) !important;
+  color: #1e293b !important;
+}
+
+/* Light mode body */
+.light-mode body,
+body:has(.light-mode) {
+  background-color: #f1f5f9;
+  color: #1e293b;
+}
+
+/* Neon border → subtle shadow in light mode */
+.light-mode .neon-border {
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1), 0 1px 2px rgba(0, 0, 0, 0.06);
+  border: 1px solid #e2e8f0;
+}
+
+/* Remove neon text glow */
+.light-mode .neon-text-cyan {
+  text-shadow: none;
+}
+
+.light-mode .neon-text-amber {
+  text-shadow: none;
+}
+
+/* Scan line hidden in light mode */
+.light-mode .scan-line {
+  display: none;
+}
+
+/* Section backgrounds */
+.light-mode section,
+.light-mode .bg-slate-900\/60,
+.light-mode .bg-slate-900\/80,
+.light-mode .bg-slate-900\/40 {
+  background-color: #ffffff !important;
+  border-color: #e2e8f0 !important;
+}
+
+/* Card backgrounds */
+.light-mode .bg-slate-800\/40 {
+  background-color: #f8fafc !important;
+  border-color: #e2e8f0 !important;
+}
+
+/* Sub-stat cards */
+.light-mode .bg-cyan-900\/30 {
+  background-color: #ecfeff !important;
+}
+
+.light-mode .bg-amber-900\/30 {
+  background-color: #fffbeb !important;
+}
+
+.light-mode .bg-slate-700\/50 {
+  background-color: #f1f5f9 !important;
+}
+
+/* Text colors */
+.light-mode .text-slate-300,
+.light-mode .text-slate-200 {
+  color: #334155 !important;
+}
+
+.light-mode .text-slate-400 {
+  color: #64748b !important;
+}
+
+.light-mode .text-slate-500 {
+  color: #94a3b8 !important;
+}
+
+.light-mode .text-slate-600 {
+  color: #475569 !important;
+}
+
+/* Cyan accent → Blue in light mode */
+.light-mode .text-cyan-400,
+.light-mode .text-cyan-300 {
+  color: #0284c7 !important;
+}
+
+/* Border colors */
+.light-mode .border-slate-700,
+.light-mode .border-slate-700\/50 {
+  border-color: #e2e8f0 !important;
+}
+
+.light-mode .border-cyan-500\/30,
+.light-mode .border-cyan-500\/20 {
+  border-color: #bae6fd !important;
+}
+
+.light-mode .border-cyan-500\/50 {
+  border-color: #7dd3fc !important;
+}
+
+.light-mode .border-red-900\/50,
+.light-mode .border-red-900\/30 {
+  border-color: #fecaca !important;
+}
+
+.light-mode .border-cyan-500\/30 {
+  border-color: #bae6fd !important;
+}
+
+/* KPI card borders */
+.light-mode .border-cyan-500\/30 {
+  border-color: #67e8f9 !important;
+}
+
+.light-mode .border-red-500\/30 {
+  border-color: #fca5a5 !important;
+}
+
+.light-mode .border-amber-500\/30 {
+  border-color: #fcd34d !important;
+}
+
+.light-mode .border-purple-500\/30 {
+  border-color: #c4b5fd !important;
+}
+
+/* Alert backgrounds */
+.light-mode .bg-red-950\/20 {
+  background-color: #fef2f2 !important;
+}
+
+.light-mode .bg-amber-950\/20 {
+  background-color: #fffbeb !important;
+}
+
+.light-mode .bg-blue-950\/20 {
+  background-color: #eff6ff !important;
+}
+
+/* Progress bar tracks */
+.light-mode .bg-slate-800 {
+  background-color: #e2e8f0 !important;
+}
+
+/* Hover glow in light mode */
+.light-mode .hover-glow:hover {
+  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+}
+
+/* Inset shadow on map */
+.light-mode .shadow-\[inset_0_0_30px_rgba\(34\,211\,238\,0\.15\)\] {
+  box-shadow: inset 0 0 30px rgba(0, 0, 0, 0.05) !important;
+}
+
+/* Button styles */
+.light-mode .bg-cyan-500\/10 {
+  background-color: #ecfeff !important;
+}
+
+.light-mode .border-cyan-500\/50 {
+  border-color: #67e8f9 !important;
+}
+
+/* Scrollbar light mode */
+.light-mode .custom-scrollbar::-webkit-scrollbar-track {
+  background: #f1f5f9;
+}
+
+.light-mode .custom-scrollbar::-webkit-scrollbar-thumb {
+  background: #94a3b8;
+}
+
+.light-mode .custom-scrollbar::-webkit-scrollbar-thumb:hover {
+  background: #64748b;
+}
+
+/* Footer in light mode */
+.light-mode footer {
+  color: #94a3b8 !important;
+}
+
+/* SVG circle gauges */
+.light-mode .text-slate-800 {
+  color: #e2e8f0 !important;
+}

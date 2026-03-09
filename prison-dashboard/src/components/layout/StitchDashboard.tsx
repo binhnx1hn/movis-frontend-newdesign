@@ -6,6 +6,7 @@ import { useEffect, useState } from 'react';
  */
 export function StitchDashboard() {
   const [currentTime, setCurrentTime] = useState('');
+  const [darkMode, setDarkMode] = useState(true);
 
   useEffect(() => {
     const updateClock = () => {
@@ -23,31 +24,46 @@ export function StitchDashboard() {
   }, []);
 
   return (
-    <div className="bg-grid min-h-screen p-4 flex flex-col gap-4">
+    <div className={`min-h-screen p-4 flex flex-col gap-4 transition-colors duration-300 ${darkMode ? 'bg-grid' : 'light-mode'}`}>
       {/* Header */}
-      <header className="flex justify-between items-center px-6 py-3 neon-border bg-slate-900/80 backdrop-blur-md rounded-lg">
+      <header className={`flex justify-between items-center px-6 py-3 rounded-lg transition-colors duration-300 ${darkMode ? 'neon-border bg-slate-900/80 backdrop-blur-md' : 'bg-white shadow-lg border border-slate-200'}`}>
         <div className="flex items-center gap-4">
-          <div className="w-10 h-10 flex items-center justify-center bg-cyan-500/20 rounded-full border border-cyan-500">
-            <svg className="w-6 h-6 text-cyan-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <div className={`w-10 h-10 flex items-center justify-center rounded-full border transition-colors duration-300 ${darkMode ? 'bg-cyan-500/20 border-cyan-500' : 'bg-blue-50 border-blue-500'}`}>
+            <svg className={`w-6 h-6 transition-colors duration-300 ${darkMode ? 'text-cyan-400' : 'text-blue-600'}`} fill="none" stroke="currentColor" viewBox="0 0 24 24">
               <path d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.040L3 20l9 2 9-2-1.382-14.016z" strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" />
             </svg>
           </div>
           <div>
-            <h1 className="text-xl font-bold tracking-widest text-cyan-400 uppercase neon-text-cyan">
+            <h1 className={`text-xl font-bold tracking-widest uppercase transition-colors duration-300 ${darkMode ? 'text-cyan-400 neon-text-cyan' : 'text-blue-700'}`}>
               Hệ Thống Giám Sát Trại Giam Trung Tâm
             </h1>
-            {/* <p className="text-xs text-slate-400">TRẠM ĐIỀU KHIỂN CHIẾN THUẬT V.2.4.0</p> */}
           </div>
         </div>
-        <div className="flex gap-8 text-right">
+        <div className="flex gap-8 text-right items-center">
           <div>
-            <p className="text-[10px] text-slate-500 uppercase">Trạng Thái Hệ Thống</p>
+            <p className={`text-[10px] uppercase transition-colors duration-300 ${darkMode ? 'text-slate-500' : 'text-slate-400'}`}>Trạng Thái Hệ Thống</p>
             <p className="text-sm font-semibold text-green-400">HOẠT ĐỘNG</p>
           </div>
           <div>
-            <p className="text-[10px] text-slate-500 uppercase">Thời Gian Hệ Thống</p>
-            <p className="text-sm font-mono font-bold text-cyan-400">{currentTime || '--:--:--'}</p>
+            <p className={`text-[10px] uppercase transition-colors duration-300 ${darkMode ? 'text-slate-500' : 'text-slate-400'}`}>Thời Gian Hệ Thống</p>
+            <p className={`text-sm font-mono font-bold transition-colors duration-300 ${darkMode ? 'text-cyan-400' : 'text-blue-600'}`}>{currentTime || '--:--:--'}</p>
           </div>
+          {/* Dark/Light Mode Toggle */}
+          <button
+            onClick={() => setDarkMode(!darkMode)}
+            className={`ml-4 w-10 h-10 flex items-center justify-center rounded-full border transition-all duration-300 hover:scale-110 ${darkMode ? 'bg-slate-800 border-cyan-500/50 text-yellow-400 hover:bg-slate-700' : 'bg-blue-50 border-blue-300 text-blue-600 hover:bg-blue-100'}`}
+            title={darkMode ? 'Chuyển sang chế độ sáng' : 'Chuyển sang chế độ tối'}
+          >
+            {darkMode ? (
+              <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z" />
+              </svg>
+            ) : (
+              <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z" />
+              </svg>
+            )}
+          </button>
         </div>
       </header>
 
@@ -58,30 +74,28 @@ export function StitchDashboard() {
           {/* KPI Overview Cards */}
           <div className="neon-border bg-slate-900/60 p-3 rounded-lg">
             <h2 className="text-[11px] font-bold text-cyan-400 mb-2 uppercase tracking-tighter">TỔNG QUAN TRẠI GIAM</h2>
+            <div className="grid grid-cols-3 gap-2 mb-2">
+              <div className="bg-slate-800/40 p-2 rounded border border-cyan-500/30 text-center">
+                <div className="text-[8px] text-slate-400 uppercase">Phạm nhân</div>
+                <div className="text-lg font-bold text-cyan-400 font-mono">830</div>
+              </div>
+              <div className="bg-slate-800/40 p-2 rounded border border-amber-500/30 text-center">
+                <div className="text-[8px] text-slate-400 uppercase">Cán bộ trực</div>
+                <div className="text-lg font-bold text-amber-400 font-mono">78</div>
+              </div>
+              <div className="bg-slate-800/40 p-2 rounded border border-green-500/30 text-center">
+                <div className="text-[8px] text-slate-400 uppercase">Camera</div>
+                <div className="text-lg font-bold text-green-400 font-mono">114/116</div>
+              </div>
+            </div>
             <div className="grid grid-cols-2 gap-2">
-              {/* Total Inmates */}
-              <div className="bg-slate-800/40 p-2 rounded border border-cyan-500/30">
-                <div className="text-[9px] text-slate-400 uppercase">Tổng phạm nhân</div>
-                <div className="text-xl font-bold text-cyan-400 font-mono">1,247</div>
-                <div className="text-[8px] text-green-400">↑ 3 hôm nay</div>
-              </div>
-              {/* Overcrowding Rate */}
               <div className="bg-slate-800/40 p-2 rounded border border-red-500/30">
-                <div className="text-[9px] text-slate-400 uppercase">Quá tải</div>
-                <div className="text-xl font-bold text-red-400 font-mono">112%</div>
-                <div className="text-[8px] text-red-400">Max: 1,110</div>
+                <div className="text-[8px] text-slate-400 uppercase">Sự cố hôm nay</div>
+                <div className="text-lg font-bold text-red-400 font-mono">1</div>
               </div>
-              {/* High Risk */}
-              <div className="bg-slate-800/40 p-2 rounded border border-amber-500/30">
-                <div className="text-[9px] text-slate-400 uppercase">Nguy cơ cao</div>
-                <div className="text-xl font-bold text-amber-400 font-mono">48</div>
-                <div className="text-[8px] text-amber-400">Theo dõi đặc biệt</div>
-              </div>
-              {/* Disciplined */}
               <div className="bg-slate-800/40 p-2 rounded border border-purple-500/30">
-                <div className="text-[9px] text-slate-400 uppercase">Đang kỷ luật</div>
-                <div className="text-xl font-bold text-purple-400 font-mono">23</div>
-                <div className="text-[8px] text-purple-400">↑ 27.8% tuần này</div>
+                <div className="text-[8px] text-slate-400 uppercase">Đang kỷ luật</div>
+                <div className="text-lg font-bold text-purple-400 font-mono">23</div>
               </div>
             </div>
           </div>
@@ -271,7 +285,7 @@ export function StitchDashboard() {
         </section>
 
         {/* Center Panel - Digital Map */}
-        <section className="col-span-6 row-span-5 neon-border bg-slate-900/40 rounded-lg relative overflow-hidden shadow-[inset_0_0_30px_rgba(34,211,238,0.15)]">
+        <section className="col-span-7 row-span-5 neon-border bg-slate-900/40 rounded-lg relative overflow-hidden shadow-[inset_0_0_30px_rgba(34,211,238,0.15)]">
           <div className="scan-line"></div>
           
           {/* Map Header Info - Hidden */}
@@ -306,316 +320,181 @@ export function StitchDashboard() {
         </section>
 
         {/* Right Sidebar - Population Stats */}
-        <section className="col-span-3 row-span-6 flex flex-col">
-          {/* Population by Area - Scrollable */}
+        <section className="col-span-2 row-span-6 flex flex-col">
           <div className="flex-1 neon-border bg-slate-900/60 p-3 rounded-lg flex flex-col overflow-hidden">
-            <h2 className="text-[11px] font-bold text-cyan-400 mb-3 uppercase tracking-tighter">QUÂN SỐ THEO KHU VỰC</h2>
-            <div className="space-y-3 overflow-y-auto pr-2 flex-grow custom-scrollbar">
-              {/* Cổng */}
-              <div className="p-3 bg-slate-800/40 rounded border border-slate-700 hover-glow">
-                <div className="flex justify-between items-center mb-2">
-                  <span className="text-xs font-bold">CỔNG</span>
-                  <span className="text-[10px] text-green-400 flex items-center gap-1">
+            <h2 className="text-[11px] font-bold text-cyan-400 mb-2 uppercase tracking-tighter">QUÂN SỐ THEO KHU VỰC</h2>
+            
+            {/* Summary Bar */}
+            <div className="grid grid-cols-4 gap-1 mb-2 text-center text-[8px]">
+              <div className="bg-cyan-900/30 p-1 rounded">
+                <p className="text-slate-400">P.Nhân</p>
+                <p className="text-xs font-bold text-cyan-400 font-mono">830</p>
+              </div>
+              <div className="bg-amber-900/30 p-1 rounded">
+                <p className="text-slate-400">Cán bộ</p>
+                <p className="text-xs font-bold text-amber-400 font-mono">78</p>
+              </div>
+              <div className="bg-green-900/30 p-1 rounded">
+                <p className="text-slate-400">Camera</p>
+                <p className="text-xs font-bold text-green-400 font-mono">114/116</p>
+              </div>
+              <div className="bg-red-900/30 p-1 rounded">
+                <p className="text-slate-400">Sự cố</p>
+                <p className="text-xs font-bold text-red-400 font-mono">1</p>
+              </div>
+            </div>
+
+            <div className="space-y-2 overflow-y-auto pr-1 flex-grow custom-scrollbar">
+              {/* CỔNG TRẠI */}
+              <div className="p-2 bg-slate-800/40 rounded border border-slate-700 hover-glow">
+                <div className="flex justify-between items-center mb-1">
+                  <span className="text-[11px] font-bold">CỔNG TRẠI</span>
+                  <span className="text-[9px] text-green-400 flex items-center gap-1">
                     <span className="w-1.5 h-1.5 bg-green-400 rounded-full"></span>
                     ỔN ĐỊNH
                   </span>
                 </div>
-                <div className="grid grid-cols-3 gap-2 text-center text-[9px] uppercase mb-2">
-                  <div className="bg-cyan-900/30 p-1 rounded">
-                    <p className="text-slate-400">Cán Bộ</p>
-                    <p className="text-sm font-bold text-cyan-400">12</p>
-                  </div>
-                  <div className="bg-amber-900/30 p-1 rounded">
-                    <p className="text-slate-400">Camera</p>
-                    <p className="text-sm font-bold text-green-400">8/8</p>
-                  </div>
-                  <div className="bg-slate-700/50 p-1 rounded">
-                    <p className="text-slate-400">Lượt vào</p>
-                    <p className="text-sm font-bold">45</p>
-                  </div>
-                </div>
-                <div className="border-t border-slate-700/50 pt-2 mt-2 space-y-1">
-                  <div className="flex justify-between text-[9px]">
-                    <span className="text-slate-500">Trạng thái:</span>
-                    <span className="text-green-400">Bình thường</span>
-                  </div>
-                  <div className="flex justify-between text-[9px]">
-                    <span className="text-slate-500">Kiểm soát:</span>
-                    <span className="text-cyan-300">Nghiêm ngặt</span>
-                  </div>
+                <div className="grid grid-cols-2 gap-x-4 text-[9px]">
+                  <div className="flex justify-between"><span className="text-slate-500">Cán bộ trực:</span><span className="text-cyan-300">12</span></div>
+                  <div className="flex justify-between"><span className="text-slate-500">Camera:</span><span className="text-green-400">8/8</span></div>
+                  <div className="flex justify-between"><span className="text-slate-500">Lượt vào:</span><span className="text-cyan-300">45</span></div>
+                  <div className="flex justify-between"><span className="text-slate-500">Lượt ra:</span><span className="text-cyan-300">42</span></div>
+                  <div className="flex justify-between"><span className="text-slate-500">Khách thăm:</span><span className="text-amber-300">6</span></div>
+                  <div className="flex justify-between"><span className="text-slate-500">Kiểm soát:</span><span className="text-cyan-300">Nghiêm ngặt</span></div>
                 </div>
               </div>
 
-              {/* Khu A */}
-              <div className="p-3 bg-slate-800/40 rounded border border-slate-700 hover-glow">
-                <div className="flex justify-between items-center mb-2">
-                  <span className="text-xs font-bold">KHU A</span>
-                  <span className="text-[10px] text-green-400 flex items-center gap-1">
+              {/* KHU A */}
+              <div className="p-2 bg-slate-800/40 rounded border border-slate-700 hover-glow">
+                <div className="flex justify-between items-center mb-1">
+                  <span className="text-[11px] font-bold">KHU A</span>
+                  <span className="text-[9px] text-green-400 flex items-center gap-1">
                     <span className="w-1.5 h-1.5 bg-green-400 rounded-full"></span>
                     ỔN ĐỊNH
                   </span>
                 </div>
-                <div className="grid grid-cols-3 gap-2 text-center text-[9px] uppercase mb-2">
-                  <div className="bg-cyan-900/30 p-1 rounded">
-                    <p className="text-slate-400">P.Nhân</p>
-                    <p className="text-sm font-bold text-cyan-400">450</p>
-                  </div>
-                  <div className="bg-amber-900/30 p-1 rounded">
-                    <p className="text-slate-400">Cán Bộ</p>
-                    <p className="text-sm font-bold text-amber-400">32</p>
-                  </div>
-                  <div className="bg-slate-700/50 p-1 rounded">
-                    <p className="text-slate-400">Phòng</p>
-                    <p className="text-sm font-bold">120</p>
-                  </div>
+                <div className="grid grid-cols-2 gap-x-4 text-[9px]">
+                  <div className="flex justify-between"><span className="text-slate-500">Phạm nhân:</span><span className="text-cyan-300">450</span></div>
+                  <div className="flex justify-between"><span className="text-slate-500">Cán bộ:</span><span className="text-amber-300">32</span></div>
+                  <div className="flex justify-between"><span className="text-slate-500">Phòng giam:</span><span className="text-cyan-300">120</span></div>
+                  <div className="flex justify-between"><span className="text-slate-500">Công suất:</span><span className="text-cyan-300">90% <span className="text-slate-500">(450/500)</span></span></div>
+                  <div className="flex justify-between"><span className="text-slate-500">Camera:</span><span className="text-green-400">48/48</span></div>
+                  <div className="flex justify-between"><span className="text-slate-500">Sự cố:</span><span className="text-green-400">0</span></div>
                 </div>
-                <div className="border-t border-slate-700/50 pt-2 mt-2 space-y-1">
-                  <div className="flex justify-between text-[9px]">
-                    <span className="text-slate-500">Công suất:</span>
-                    <span className="text-cyan-300 font-mono">450/500 (90%)</span>
-                  </div>
-                  <div className="flex justify-between text-[9px]">
-                    <span className="text-slate-500">Loại:</span>
-                    <span className="text-amber-300">An ninh trung bình</span>
-                  </div>
-                  <div className="flex justify-between text-[9px]">
-                    <span className="text-slate-500">Trạng thái:</span>
-                    <span className="text-green-400">Bình thường</span>
-                  </div>
-                  <div className="flex justify-between text-[9px]">
-                    <span className="text-slate-500">Camera:</span>
-                    <span className="text-green-400">48/48 hoạt động</span>
-                  </div>
-                </div>
+                <div className="mt-1 text-[8px] text-slate-500">Loại khu: <span className="text-amber-300">An ninh trung bình</span></div>
               </div>
 
-              {/* Khu B */}
-              <div className="p-3 bg-slate-800/40 rounded border border-slate-700 hover-glow">
-                <div className="flex justify-between items-center mb-2">
-                  <span className="text-xs font-bold">KHU B</span>
-                  <span className="text-[10px] text-amber-400 flex items-center gap-1">
+              {/* KHU B */}
+              <div className="p-2 bg-slate-800/40 rounded border border-amber-700/50 hover-glow">
+                <div className="flex justify-between items-center mb-1">
+                  <span className="text-[11px] font-bold">KHU B</span>
+                  <span className="text-[9px] text-amber-400 flex items-center gap-1">
                     <span className="w-1.5 h-1.5 bg-amber-400 rounded-full alert-pulse"></span>
                     CHỜ KIỂM TRA
                   </span>
                 </div>
-                <div className="grid grid-cols-3 gap-2 text-center text-[9px] uppercase mb-2">
-                  <div className="bg-cyan-900/30 p-1 rounded">
-                    <p className="text-slate-400">P.Nhân</p>
-                    <p className="text-sm font-bold text-cyan-400">380</p>
-                  </div>
-                  <div className="bg-amber-900/30 p-1 rounded">
-                    <p className="text-slate-400">Cán Bộ</p>
-                    <p className="text-sm font-bold text-amber-400">28</p>
-                  </div>
-                  <div className="bg-slate-700/50 p-1 rounded">
-                    <p className="text-slate-400">Phòng</p>
-                    <p className="text-sm font-bold">100</p>
-                  </div>
+                <div className="grid grid-cols-2 gap-x-4 text-[9px]">
+                  <div className="flex justify-between"><span className="text-slate-500">Phạm nhân:</span><span className="text-cyan-300">380</span></div>
+                  <div className="flex justify-between"><span className="text-slate-500">Cán bộ:</span><span className="text-amber-300">28</span></div>
+                  <div className="flex justify-between"><span className="text-slate-500">Phòng giam:</span><span className="text-cyan-300">100</span></div>
+                  <div className="flex justify-between"><span className="text-slate-500">Công suất:</span><span className="text-amber-400">95% 🟡 <span className="text-slate-500">(380/400)</span></span></div>
+                  <div className="flex justify-between"><span className="text-slate-500">Camera:</span><span className="text-red-400">38/40 🔴</span></div>
+                  <div className="flex justify-between"><span className="text-slate-500">Sự cố:</span><span className="text-amber-400">1</span></div>
                 </div>
-                <div className="border-t border-slate-700/50 pt-2 mt-2 space-y-1">
-                  <div className="flex justify-between text-[9px]">
-                    <span className="text-slate-500">Công suất:</span>
-                    <span className="text-cyan-300 font-mono">380/400 (95%)</span>
-                  </div>
-                  <div className="flex justify-between text-[9px]">
-                    <span className="text-slate-500">Loại:</span>
-                    <span className="text-amber-300">An ninh thấp</span>
-                  </div>
-                  <div className="flex justify-between text-[9px]">
-                    <span className="text-slate-500">Trạng thái:</span>
-                    <span className="text-amber-400">Đang kiểm tra</span>
-                  </div>
-                  <div className="flex justify-between text-[9px]">
-                    <span className="text-slate-500">Camera:</span>
-                    <span className="text-amber-400">38/40 hoạt động</span>
-                  </div>
-                </div>
+                <div className="mt-1 text-[8px] text-slate-500">Loại khu: <span className="text-amber-300">An ninh thấp</span></div>
               </div>
 
-              {/* Hội Trường Phạm Nhân */}
-              <div className="p-3 bg-slate-800/40 rounded border border-slate-700 hover-glow">
-                <div className="flex justify-between items-center mb-2">
-                  <span className="text-xs font-bold">HỘI TRƯỜNG PHẠM NHÂN</span>
-                  <span className="text-[10px] text-green-400 flex items-center gap-1">
+              {/* HỘI TRƯỜNG */}
+              <div className="p-2 bg-slate-800/40 rounded border border-slate-700 hover-glow">
+                <div className="flex justify-between items-center mb-1">
+                  <span className="text-[11px] font-bold">HỘI TRƯỜNG</span>
+                  <span className="text-[9px] text-green-400 flex items-center gap-1">
                     <span className="w-1.5 h-1.5 bg-green-400 rounded-full"></span>
                     ỔN ĐỊNH
                   </span>
                 </div>
-                <div className="grid grid-cols-3 gap-2 text-center text-[9px] uppercase mb-2">
-                  <div className="bg-cyan-900/30 p-1 rounded">
-                    <p className="text-slate-400">Sức chứa</p>
-                    <p className="text-sm font-bold text-cyan-400">500</p>
-                  </div>
-                  <div className="bg-amber-900/30 p-1 rounded">
-                    <p className="text-slate-400">Cán Bộ</p>
-                    <p className="text-sm font-bold text-amber-400">8</p>
-                  </div>
-                  <div className="bg-slate-700/50 p-1 rounded">
-                    <p className="text-slate-400">Camera</p>
-                    <p className="text-sm font-bold text-green-400">12/12</p>
-                  </div>
+                <div className="grid grid-cols-2 gap-x-4 text-[9px]">
+                  <div className="flex justify-between"><span className="text-slate-500">Sức chứa:</span><span className="text-cyan-300">500</span></div>
+                  <div className="flex justify-between"><span className="text-slate-500">Hiện tại:</span><span className="text-cyan-300">320</span></div>
+                  <div className="flex justify-between"><span className="text-slate-500">Cán bộ GS:</span><span className="text-amber-300">8</span></div>
+                  <div className="flex justify-between"><span className="text-slate-500">Camera:</span><span className="text-green-400">12/12</span></div>
                 </div>
-                <div className="border-t border-slate-700/50 pt-2 mt-2 space-y-1">
-                  <div className="flex justify-between text-[9px]">
-                    <span className="text-slate-500">Trạng thái:</span>
-                    <span className="text-green-400">Bình thường</span>
-                  </div>
-                  <div className="flex justify-between text-[9px]">
-                    <span className="text-slate-500">Hoạt động:</span>
-                    <span className="text-cyan-300">Họp phạm nhân 14:00</span>
-                  </div>
-                </div>
+                <div className="mt-1 text-[8px] text-slate-500">Hoạt động: <span className="text-cyan-300">Họp phạm nhân – 14:00</span></div>
               </div>
 
-              {/* Nhà ăn */}
-              <div className="p-3 bg-slate-800/40 rounded border border-slate-700 hover-glow">
-                <div className="flex justify-between items-center mb-2">
-                  <span className="text-xs font-bold">NHÀ ĂN</span>
-                  <span className="text-[10px] text-green-400 flex items-center gap-1">
+              {/* NHÀ ĂN */}
+              <div className="p-2 bg-slate-800/40 rounded border border-slate-700 hover-glow">
+                <div className="flex justify-between items-center mb-1">
+                  <span className="text-[11px] font-bold">NHÀ ĂN</span>
+                  <span className="text-[9px] text-green-400 flex items-center gap-1">
                     <span className="w-1.5 h-1.5 bg-green-400 rounded-full"></span>
                     ỔN ĐỊNH
                   </span>
                 </div>
-                <div className="grid grid-cols-3 gap-2 text-center text-[9px] uppercase mb-2">
-                  <div className="bg-cyan-900/30 p-1 rounded">
-                    <p className="text-slate-400">Sức chứa</p>
-                    <p className="text-sm font-bold text-cyan-400">300</p>
-                  </div>
-                  <div className="bg-amber-900/30 p-1 rounded">
-                    <p className="text-slate-400">Cán Bộ</p>
-                    <p className="text-sm font-bold text-amber-400">6</p>
-                  </div>
-                  <div className="bg-slate-700/50 p-1 rounded">
-                    <p className="text-slate-400">Camera</p>
-                    <p className="text-sm font-bold text-green-400">8/8</p>
-                  </div>
+                <div className="grid grid-cols-2 gap-x-4 text-[9px]">
+                  <div className="flex justify-between"><span className="text-slate-500">Sức chứa:</span><span className="text-cyan-300">300</span></div>
+                  <div className="flex justify-between"><span className="text-slate-500">Hiện tại:</span><span className="text-cyan-300">180</span></div>
+                  <div className="flex justify-between"><span className="text-slate-500">Cán bộ:</span><span className="text-amber-300">6</span></div>
+                  <div className="flex justify-between"><span className="text-slate-500">Camera:</span><span className="text-green-400">8/8</span></div>
                 </div>
-                <div className="border-t border-slate-700/50 pt-2 mt-2 space-y-1">
-                  <div className="flex justify-between text-[9px]">
-                    <span className="text-slate-500">Trạng thái:</span>
-                    <span className="text-green-400">Bình thường</span>
-                  </div>
-                  <div className="flex justify-between text-[9px]">
-                    <span className="text-slate-500">Bữa ăn tiếp:</span>
-                    <span className="text-cyan-300">Trưa - 11:30</span>
-                  </div>
-                </div>
+                <div className="mt-1 text-[8px] text-slate-500">Suất ăn hôm nay: <span className="text-cyan-300">830</span></div>
               </div>
 
-              {/* Nhà bếp */}
-              <div className="p-3 bg-slate-800/40 rounded border border-slate-700 hover-glow">
-                <div className="flex justify-between items-center mb-2">
-                  <span className="text-xs font-bold">NHÀ BẾP</span>
-                  <span className="text-[10px] text-green-400 flex items-center gap-1">
+              {/* NHÀ BẾP */}
+              <div className="p-2 bg-slate-800/40 rounded border border-slate-700 hover-glow">
+                <div className="flex justify-between items-center mb-1">
+                  <span className="text-[11px] font-bold">NHÀ BẾP</span>
+                  <span className="text-[9px] text-green-400 flex items-center gap-1">
                     <span className="w-1.5 h-1.5 bg-green-400 rounded-full"></span>
                     HOẠT ĐỘNG
                   </span>
                 </div>
-                <div className="grid grid-cols-3 gap-2 text-center text-[9px] uppercase mb-2">
-                  <div className="bg-cyan-900/30 p-1 rounded">
-                    <p className="text-slate-400">Nhân viên</p>
-                    <p className="text-sm font-bold text-cyan-400">18</p>
-                  </div>
-                  <div className="bg-amber-900/30 p-1 rounded">
-                    <p className="text-slate-400">Cán Bộ</p>
-                    <p className="text-sm font-bold text-amber-400">4</p>
-                  </div>
-                  <div className="bg-slate-700/50 p-1 rounded">
-                    <p className="text-slate-400">Camera</p>
-                    <p className="text-sm font-bold text-green-400">6/6</p>
-                  </div>
-                </div>
-                <div className="border-t border-slate-700/50 pt-2 mt-2 space-y-1">
-                  <div className="flex justify-between text-[9px]">
-                    <span className="text-slate-500">Trạng thái:</span>
-                    <span className="text-green-400">Đang nấu ăn</span>
-                  </div>
-                  <div className="flex justify-between text-[9px]">
-                    <span className="text-slate-500">Vệ sinh:</span>
-                    <span className="text-green-400">Đạt tiêu chuẩn</span>
-                  </div>
+                <div className="grid grid-cols-2 gap-x-4 text-[9px]">
+                  <div className="flex justify-between"><span className="text-slate-500">Nhân viên:</span><span className="text-cyan-300">18</span></div>
+                  <div className="flex justify-between"><span className="text-slate-500">Cán bộ:</span><span className="text-amber-300">4</span></div>
+                  <div className="flex justify-between"><span className="text-slate-500">Camera:</span><span className="text-green-400">6/6</span></div>
+                  <div className="flex justify-between"><span className="text-slate-500">Vệ sinh:</span><span className="text-green-400">Đạt</span></div>
                 </div>
               </div>
 
-              {/* Bệnh Xá */}
-              <div className="p-3 bg-slate-800/40 rounded border border-slate-700 hover-glow">
-                <div className="flex justify-between items-center mb-2">
-                  <span className="text-xs font-bold">BỆNH XÁ</span>
-                  <span className="text-[10px] text-green-400 flex items-center gap-1">
+              {/* BỆNH XÁ */}
+              <div className="p-2 bg-slate-800/40 rounded border border-slate-700 hover-glow">
+                <div className="flex justify-between items-center mb-1">
+                  <span className="text-[11px] font-bold">BỆNH XÁ</span>
+                  <span className="text-[9px] text-green-400 flex items-center gap-1">
                     <span className="w-1.5 h-1.5 bg-green-400 rounded-full"></span>
                     HOẠT ĐỘNG
                   </span>
                 </div>
-                <div className="grid grid-cols-3 gap-2 text-center text-[9px] uppercase mb-2">
-                  <div className="bg-cyan-900/30 p-1 rounded">
-                    <p className="text-slate-400">Bệnh nhân</p>
-                    <p className="text-sm font-bold text-cyan-400">35</p>
-                  </div>
-                  <div className="bg-amber-900/30 p-1 rounded">
-                    <p className="text-slate-400">Bác sĩ</p>
-                    <p className="text-sm font-bold text-amber-400">6</p>
-                  </div>
-                  <div className="bg-slate-700/50 p-1 rounded">
-                    <p className="text-slate-400">Giường</p>
-                    <p className="text-sm font-bold">50</p>
-                  </div>
+                <div className="grid grid-cols-2 gap-x-4 text-[9px]">
+                  <div className="flex justify-between"><span className="text-slate-500">Bệnh nhân:</span><span className="text-cyan-300">35</span></div>
+                  <div className="flex justify-between"><span className="text-slate-500">Giường:</span><span className="text-cyan-300">35/50</span></div>
+                  <div className="flex justify-between"><span className="text-slate-500">Bác sĩ:</span><span className="text-amber-300">6</span></div>
+                  <div className="flex justify-between"><span className="text-slate-500">Camera:</span><span className="text-green-400">10/10</span></div>
                 </div>
-                <div className="border-t border-slate-700/50 pt-2 mt-2 space-y-1">
-                  <div className="flex justify-between text-[9px]">
-                    <span className="text-slate-500">Công suất:</span>
-                    <span className="text-cyan-300 font-mono">35/50 (70%)</span>
-                  </div>
-                  <div className="flex justify-between text-[9px]">
-                    <span className="text-slate-500">Camera:</span>
-                    <span className="text-green-400">10/10 hoạt động</span>
-                  </div>
-                  <div className="flex justify-between text-[9px]">
-                    <span className="text-slate-500">Trạng thái:</span>
-                    <span className="text-green-400">Hoạt động 24/7</span>
-                  </div>
-                </div>
+                <div className="mt-1 text-[8px] text-slate-500">Hoạt động: <span className="text-green-400">24/7</span></div>
               </div>
 
               {/* KSAN */}
-              <div className="p-3 bg-slate-800/40 rounded border border-red-900/50 hover-glow">
-                <div className="flex justify-between items-center mb-2">
-                  <span className="text-xs font-bold">KSAN</span>
-                  <span className="text-[10px] text-green-400 flex items-center gap-1">
+              <div className="p-2 bg-slate-800/40 rounded border border-red-900/50 hover-glow">
+                <div className="flex justify-between items-center mb-1">
+                  <span className="text-[11px] font-bold">KSAN</span>
+                  <span className="text-[9px] text-green-400 flex items-center gap-1">
                     <span className="w-1.5 h-1.5 bg-green-400 rounded-full"></span>
                     ỔN ĐỊNH
                   </span>
                 </div>
-                <div className="grid grid-cols-3 gap-2 text-center text-[9px] uppercase mb-2">
-                  <div className="bg-cyan-900/30 p-1 rounded">
-                    <p className="text-slate-400">P.Nhân</p>
-                    <p className="text-sm font-bold text-cyan-400">82</p>
-                  </div>
-                  <div className="bg-amber-900/30 p-1 rounded">
-                    <p className="text-slate-400">Cán Bộ</p>
-                    <p className="text-sm font-bold text-amber-400">15</p>
-                  </div>
-                  <div className="bg-slate-700/50 p-1 rounded">
-                    <p className="text-slate-400">Phòng</p>
-                    <p className="text-sm font-bold">40</p>
-                  </div>
+                <div className="grid grid-cols-2 gap-x-4 text-[9px]">
+                  <div className="flex justify-between"><span className="text-slate-500">Phạm nhân:</span><span className="text-cyan-300">82</span></div>
+                  <div className="flex justify-between"><span className="text-slate-500">Cán bộ:</span><span className="text-amber-300">15</span></div>
+                  <div className="flex justify-between"><span className="text-slate-500">Phòng:</span><span className="text-cyan-300">40</span></div>
+                  <div className="flex justify-between"><span className="text-slate-500">Công suất:</span><span className="text-cyan-300">82% <span className="text-slate-500">(82/100)</span></span></div>
+                  <div className="flex justify-between"><span className="text-slate-500">Camera:</span><span className="text-amber-400">14/16 ⚠️</span></div>
+                  <div className="flex justify-between"><span className="text-slate-500">Sự cố:</span><span className="text-green-400">0</span></div>
                 </div>
-                <div className="border-t border-red-900/30 pt-2 mt-2 space-y-1">
-                  <div className="flex justify-between text-[9px]">
-                    <span className="text-slate-500">Công suất:</span>
-                    <span className="text-cyan-300 font-mono">82/100 (82%)</span>
-                  </div>
-                  <div className="flex justify-between text-[9px]">
-                    <span className="text-slate-500">Loại:</span>
-                    <span className="text-red-400">An ninh tối đa</span>
-                  </div>
-                  <div className="flex justify-between text-[9px]">
-                    <span className="text-slate-500">Camera:</span>
-                    <span className="text-amber-400">14/16 hoạt động</span>
-                  </div>
-                  <div className="flex justify-between text-[9px]">
-                    <span className="text-slate-500">Cảnh báo:</span>
-                    <span className="text-red-400">Phạm nhân nguy hiểm</span>
-                  </div>
+                <div className="mt-1 text-[8px]">
+                  <span className="text-slate-500">Loại khu: </span><span className="text-red-400">An ninh tối đa</span>
+                  <span className="ml-2 text-red-400">⚠ Phạm nhân nguy hiểm</span>
                 </div>
               </div>
             </div>
@@ -623,7 +502,7 @@ export function StitchDashboard() {
         </section>
 
         {/* Bottom Panel - Camera System */}
-        <section className="col-span-6 row-span-1 neon-border bg-slate-900/60 p-3 rounded-lg">
+        <section className="col-span-7 row-span-1 neon-border bg-slate-900/60 p-3 rounded-lg">
           <h2 className="text-xs font-bold text-cyan-400 mb-3 uppercase tracking-tighter">HỆ THỐNG CAMERA AN NINH</h2>
           <div className="grid grid-cols-4 gap-3">
             <div className="flex items-center justify-between p-2 bg-slate-800/40 rounded">
